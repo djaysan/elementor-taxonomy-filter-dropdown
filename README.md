@@ -138,3 +138,42 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 ```
 
+
+OPTIONAL:
+Custom order of taxonomies
+Example usage in your Programs dropdown script:
+Replace this part:
+```
+taxonomyButtons.forEach(function(button) {
+    var filterValue = button.getAttribute('data-filter');
+    if (filterValue !== "__all") {
+        var option = document.createElement('option');
+        option.value = filterValue;
+        option.text = button.textContent;
+        dropdown.appendChild(option);
+    }
+});
+```
+👉 With this:
+
+```
+var desiredOrder = [
+    "performance",
+    "chamber-music",
+    "staff-accompanist",
+    "conducting",
+    "artist-in-residence"
+];
+
+desiredOrder.forEach(function(filterValue) {
+    taxonomyButtons.forEach(function(button) {
+        if (button.getAttribute('data-filter') === filterValue) {
+            var option = document.createElement('option');
+            option.value = filterValue;
+            option.text = button.textContent;
+            dropdown.appendChild(option);
+        }
+    });
+});
+
+```
