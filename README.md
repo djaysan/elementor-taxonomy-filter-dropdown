@@ -1,21 +1,19 @@
-# elementor-taxonomy-filter-dropdown
-Use elementor Taxonomy widget as a dropdown instead of horizontal
-What you need to adjust:
-✅ Give each Elementor taxonomy filter widget a specific class in Elementor (easy via Advanced → CSS Classes).
-For example:
+# Elementor taxonomy filter dropdown
 
-.tax-instruments for the Instrument filter widget (remove dot in front)
+Turns Elementor's Taxonomy Filter widget into a dropdown (select) instead of the default horizontal button list. Works with multiple filter widgets on the same page, one dropdown per taxonomy.
 
-.tax-programs for the Program filter widget (remove dot in front)
+## Setup
 
-✅ Then the JS can separately process each one into its respective dropdown.
+1. Give each Elementor taxonomy filter widget its own CSS class (Advanced tab, CSS Classes, without the leading dot). For example:
+   - `tax-instruments` for the Instrument filter widget
+   - `tax-programs` for the Program filter widget
+2. Add one HTML widget per taxonomy with the matching code below. The script reads the widget's filter buttons, builds the dropdown options, and clicks the matching button when a selection is made.
 
-Summary:
-You can reuse your original code logic, just wrap it in a function and call it twice — once per taxonomy.
+You can reuse the same logic for any number of taxonomies: wrap it in its own HTML widget and change the class name and dropdown ID.
 
+### HTML widget 1: Instruments dropdown
 
-HTML Widget #1 → Instruments dropdown:
-```
+```html
 <!-- Instruments Dropdown -->
 <label for="instrument-dropdown">Instrument</label>
 <select id="instrument-dropdown">
@@ -76,8 +74,9 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 ```
 
-HTML Widget #2 → Programs dropdown:
-```
+### HTML widget 2: Programs dropdown
+
+```html
 <!-- Programs Dropdown -->
 <label for="program-dropdown">Program</label>
 <select id="program-dropdown">
@@ -138,12 +137,11 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 ```
 
+## Optional: custom order of options
 
-OPTIONAL:
-Custom order of taxonomies
-Example usage in your Programs dropdown script:
-Replace this part:
-```
+To control the order of the dropdown options, replace this part of the script:
+
+```js
 taxonomyButtons.forEach(function(button) {
     var filterValue = button.getAttribute('data-filter');
     if (filterValue !== "__all") {
@@ -154,9 +152,10 @@ taxonomyButtons.forEach(function(button) {
     }
 });
 ```
-👉 With this:
 
-```
+with this:
+
+```js
 var desiredOrder = [
     "performance",
     "chamber-music",
@@ -175,5 +174,10 @@ desiredOrder.forEach(function(filterValue) {
         }
     });
 });
-
 ```
+
+## Support
+
+If this saved you time, you can support my work:
+
+[<img src="https://storage.ko-fi.com/cdn/kofi2.png?v=6" alt="Buy Me a Coffee at ko-fi.com" height="36">](https://ko-fi.com/H2H81I6YY1)
